@@ -1,3 +1,5 @@
+#!/Library/Frameworks/Python.framework/Versions/3.7/bin/python3
+
 import requests
 from lxml import html
 
@@ -13,4 +15,4 @@ urls  = [('Boruto: Naruto Next Generations', 'https://anilist.co/anime/97938/Bor
 
 
 for item in urls:
-	print (item[0], " " , get_release_countdown(item[1]))
+	print ("<p><h1>", item[0], "</h1> " , get_release_countdown(item[1]), "</p>")
