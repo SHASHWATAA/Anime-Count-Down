@@ -1,88 +1,100 @@
-<?php
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
 
-// $pythonOutput = shell_exec ( '/Applications/MAMP/htdocs/Anime-Count-Down/Main.py' );
-$pythonOutput = "Boruto: Naruto Next Generations;147;8 March 2020 17:30|Boku no Hero Academia;84;7 March 2020 17:30|Nanatsu no Taizai: Kamigaki no Gekirin;21;4 March 2020 17:55";
-
-$arrAllAnime = explode("|", $pythonOutput);
-
-// print_r($arrAllAnime);
-
-echo "<div id = AnimeList>";
-
-foreach ($arrAllAnime as $EachAnime) {
-	$arrEachAnime = explode(";", $EachAnime);
-	echo ("<div name='Anime'><h1><span name = 'Title'>");
-	echo $arrEachAnime[0];
-	echo( "</span></h1> <span name = 'Episode'>Ep: <span name='EpisodeNumber'>");
-	echo $arrEachAnime[1];
-	echo("</span></span><span name ='date'> Release Date: <span name='ReleaseDate'>");
-	echo $arrEachAnime[2];
-	echo("</span></span><span name ='countdown'> Time left: <span name='Timer'>");
-	echo("</span></span></div>");
-}
-
-echo "</div>"
-?>
-
-
-
-
-
-<!-- Display the countdown timer in an element -->
-<p id="demo"></p>
-
-<script>
-
-	var AnimeList = document.getElementById('AnimeList').getElementsByTagName('div');
+<body>
 	
-	for (var Anime of AnimeList){
 
-	// Set the date we're counting down to
-	var ReleasedateJST= Anime.querySelector('span:nth-child(3) > span').innerText;
-	var ReleaseDateJSTepoch = new Date(ReleasedateJST).getTime();
-	var JSToffset = -9*3600000;
-	var ReleaseDateUTCepoch = ReleaseDateJSTepoch + JSToffset;
+	<?php
 
-	var d = new Date();
-	var localOffset = d.getTimezoneOffset() * 60000;
-	var ReleaseDatelocalepoch = ReleaseDateUTCepoch - localOffset;
-	var ReleaseDatelocalepochDateObj = new Date(ReleaseDatelocalepoch);
-	var ReleaseDatelocal = ReleaseDatelocalepochDateObj.toDateString() + ' ' + ReleaseDatelocalepochDateObj.toLocaleTimeString('en-US');
-	Anime.querySelector('span:nth-child(3) > span').innerText = ReleaseDatelocal;
+		$pythonOutput = shell_exec ( '/Applications/MAMP/htdocs/Anime-Count-Down/Main.py' );
+		// $pythonOutput = "Boruto: Naruto Next Generations;147;8 March 2020 17:30;['https://cdn.myanimelist.net/images/anime/4/83369.jpg', 'https://cdn.myanimelist.net/images/anime/12/86784.jpg', 'https://cdn.myanimelist.net/images/anime/1393/96860.jpg', 'https://cdn.myanimelist.net/images/anime/1777/104957.jpg']|Boku no Hero Academia;84;7 March 2020 17:30;['https://cdn.myanimelist.net/images/anime/1978/95162.jpg', 'https://cdn.myanimelist.net/images/anime/1251/97634.jpg', 'https://cdn.myanimelist.net/images/anime/1831/102539.jpg', 'https://cdn.myanimelist.net/images/anime/1315/102961.jpg', 'https://cdn.myanimelist.net/images/anime/1137/105203.jpg', 'https://cdn.myanimelist.net/images/anime/1023/105559.jpg', 'https://cdn.myanimelist.net/images/anime/1233/106246.jpg', 'https://cdn.myanimelist.net/images/anime/1744/106248.jpg']|Nanatsu no Taizai: Kamigaki no Gekirin;21;4 March 2020 17:55;['https://cdn.myanimelist.net/images/anime/1574/100519.jpg', 'https://cdn.myanimelist.net/images/anime/1546/103418.jpg']";
 
-	// Update the count down every 1 second
-	var x = setInterval(Counter, 1000, Anime, ReleaseDateUTCepoch);	
+		$arrAllAnime = explode("|", $pythonOutput);
+
+		// print_r($arrAllAnime);
+
+		echo "<div id = AnimeList>";
+
+		foreach ($arrAllAnime as $EachAnime) {
+			$arrEachAnime = explode(";", $EachAnime);
+			echo ("<div class='Anime'>");
+
+			$searchval = array("]","[","'");
+			$replaceval = array("","","");
+			$imagelinks = str_replace($searchval,$replaceval,$arrEachAnime[3]);
+			$imagelink = explode(',', $imagelinks);
+
+			
+
+			echo("<h1>");
+			echo $arrEachAnime[0];
+			echo( "</h1>");
+
+			echo ("<img src ='" . $imagelink[0] . "'>");
+			echo("<span class = 'Episode'>Ep: <span name='EpisodeNumber'>");
+			echo $arrEachAnime[1];
+			echo("</span></span><span name ='date'> Release Date: <span name='ReleaseDate'>");
+			echo $arrEachAnime[2];
+			echo("</span></span><span name ='countdown'> Time left: <span name='Timer'>");
+			echo("</span></span></div>");
+		}
+
+		echo "</div>"
+	?>
+
+	<script>
+
+		var AnimeList = document.getElementById('AnimeList').getElementsByTagName('div');
+
+		for (var Anime of AnimeList){
+
+			var ReleasedateJST= Anime.querySelector("span[name='ReleaseDate']").innerText;
+			var ReleaseDateJSTepoch = new Date(ReleasedateJST).getTime();
+			var JSToffset = -9*3600000;
+			var ReleaseDateUTCepoch = ReleaseDateJSTepoch + JSToffset;
+
+			var d = new Date();
+			var localOffset = d.getTimezoneOffset() * 60000;
+			var ReleaseDatelocalepoch = ReleaseDateUTCepoch - localOffset;
+			var ReleaseDatelocalepochDateObj = new Date(ReleaseDatelocalepoch);
+			var ReleaseDatelocal = ReleaseDatelocalepochDateObj.toDateString() + ' ' + ReleaseDatelocalepochDateObj.toLocaleTimeString('en-US');
+			Anime.querySelector("span[name='ReleaseDate']").innerText = ReleaseDatelocal;
+
+		// Update the count down every 1 second
+		var x = setInterval(Counter, 1000, Anime, ReleaseDateUTCepoch);	
 	
-	}
+		}
 
-function Counter(Anime, ReleaseDateUTCepoch) {
+		function Counter(Anime, ReleaseDateUTCepoch) {
 
-	  // Get today's date and time
-	  var d = new Date();
-	  var localTime = d.getTime();
-	  var localOffset = d.getTimezoneOffset() * 60000;
-	  var UTClocal = localTime + localOffset;
+		// Get today's date and time
+		var d = new Date();
+		var localTime = d.getTime();
+		var localOffset = d.getTimezoneOffset() * 60000;
+		var UTClocal = localTime + localOffset;
 
-	  // Find the distance between now and the count down date
-	  var distance = ReleaseDateUTCepoch - UTClocal;
+		// Find the distance between now and the count down date
+		var distance = ReleaseDateUTCepoch - UTClocal;
 
-	  // Time calculations for days, hours, minutes and seconds
-	  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-	  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-	  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-	  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-	  // Display the result in the element with id="demo"
-	  Anime.querySelector("span:nth-child(4) > span").innerHTML = days + "d " + hours + "h "
-	  + minutes + "m " + seconds + "s ";
+		// Time calculations for days, hours, minutes and seconds
+		var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		// Display the result in the element with id="demo"
+		Anime.querySelector("span[name='Timer']").innerHTML = days + "d " + hours + "h "
+		+ minutes + "m " + seconds + "s ";
 
-	  // If the count down is finished, write some text 
-	  if (distance < 0) {
-	  	clearInterval(x);
-	  	Anime.getElementById("demo").innerHTML = "EXPIRED";
-	  }
-	}
-</script>
+		// If the count down is finished, write some text 
+		if (distance < 0) {
+			clearInterval(x);
+			Anime.getElementById("demo").innerHTML = "EXPIRED";
+		}
+		}
+	</script>
 
+</body>
 
 
 
