@@ -38,27 +38,33 @@ echo "</div>"
 	for (var Anime of AnimeList){
 
 	// Set the date we're counting down to
-	var Releasedate= Anime.querySelector('span:nth-child(3) > span').innerText;
-	var countDownDateJST = new Date(Releasedate).getTime();
+	var ReleasedateJST= Anime.querySelector('span:nth-child(3) > span').innerText;
+	var ReleaseDateJSTepoch = new Date(ReleasedateJST).getTime();
 	var JSToffset = -9*3600000;
-	var countDownDateUTC = countDownDateJST + JSToffset;
+	var ReleaseDateUTCepoch = ReleaseDateJSTepoch + JSToffset;
 
+	var d = new Date();
+	var localOffset = d.getTimezoneOffset() * 60000;
+	var ReleaseDatelocalepoch = ReleaseDateUTCepoch - localOffset;
+	var ReleaseDatelocalepochDateObj = new Date(ReleaseDatelocalepoch);
+	var ReleaseDatelocal = ReleaseDatelocalepochDateObj.toDateString() + ' ' + ReleaseDatelocalepochDateObj.toLocaleTimeString('en-US');
+	Anime.querySelector('span:nth-child(3) > span').innerText = ReleaseDatelocal;
 
 	// Update the count down every 1 second
-	var x = setInterval(Counter, 1000, Anime, countDownDateUTC);	
+	var x = setInterval(Counter, 1000, Anime, ReleaseDateUTCepoch);	
 	
 	}
 
-function Counter(Anime, countDownDateUTC) {
+function Counter(Anime, ReleaseDateUTCepoch) {
 
 	  // Get today's date and time
-	  d = new Date();
-	  localTime = d.getTime();
-	  localOffset = d.getTimezoneOffset() * 60000;
-	  UTClocal = localTime + localOffset;
+	  var d = new Date();
+	  var localTime = d.getTime();
+	  var localOffset = d.getTimezoneOffset() * 60000;
+	  var UTClocal = localTime + localOffset;
 
 	  // Find the distance between now and the count down date
-	  var distance = countDownDateUTC - UTClocal;
+	  var distance = ReleaseDateUTCepoch - UTClocal;
 
 	  // Time calculations for days, hours, minutes and seconds
 	  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
