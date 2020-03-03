@@ -12,9 +12,9 @@ def get_release_countdown(url):
 	return countdowndata 
 
 
-urls  = [('Boruto: Naruto Next Generations', 'https://www.monthly.moe/anime/2117-nanatsu-no-taizai-kamigami-no-gekirin'),
-		 ('Boku no Hero Academia', 'https://www.monthly.moe/anime/1048-boruto-naruto-next-generations'),
-		 ('Nanatsu no Taizai: Kamigaki no Gekirin','https://www.monthly.moe/anime/1048-boruto-naruto-next-generations')]
+urls  = [('Boruto: Naruto Next Generations', 'https://www.monthly.moe/anime/1048-boruto-naruto-next-generations'),
+		 ('Boku no Hero Academia', 'https://www.monthly.moe/anime/2082-boku-no-hero-academia-2019'),
+		 ('Nanatsu no Taizai: Kamigaki no Gekirin','https://www.monthly.moe/anime/2117-nanatsu-no-taizai-kamigami-no-gekirin')]
 
 
 for item in urls:
