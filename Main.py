@@ -5,14 +5,16 @@ from lxml import html
 
 def get_release_countdown(url):
 	r  = requests.get(url)
-	timer = html.fromstring(r.content).xpath('normalize-space(//*[@id="app"]/div[3]/div/div[2]/div[1]/div[2]/div[1]/div[2]/span)')
-	return timer
+	date = html.fromstring(r.content).xpath('//tr[contains(@class, "day-future")][1]/td/span[contains(@class, "datetime")]/text()')
+	episode = html.fromstring(r.content).xpath('//tr[contains(@class, "day-future")][1]/td[2]/span[contains(text(),*)]/text()')
+	countdowndata = (date,episode)
+	return countdowndata 
 
 
-urls  = [('Boruto: Naruto Next Generations', 'https://anilist.co/anime/97938/Boruto-Naruto-Next-Generations'),
-		 ('Boku no Hero Academia', 'https://anilist.co/anime/104276/Boku-no-Hero-Academia-4'),
-		 ('Nanatsu no Taizai: Kamigaki no Gekirin','https://anilist.co/anime/108928/Nanatsu-no-Taizai-Kamigami-no-Gekirin')]
+urls  = [('Boruto: Naruto Next Generations', 'https://www.monthly.moe/anime/2117-nanatsu-no-taizai-kamigami-no-gekirin'),
+		 ('Boku no Hero Academia', 'https://www.monthly.moe/anime/1048-boruto-naruto-next-generations'),
+		 ('Nanatsu no Taizai: Kamigaki no Gekirin','https://www.monthly.moe/anime/1048-boruto-naruto-next-generations')]
 
 
 for item in urls:
-	print ("<p><h1>", item[0], "</h1> " , get_release_countdown(item[1]), "</p>")
+	print ("<p><h1>", item[0], "</h1> episode:" , get_release_countdown(item[1])[1][0], "release date:", get_release_countdown(item[1])[0][0] ,"</p>")
