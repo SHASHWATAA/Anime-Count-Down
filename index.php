@@ -99,16 +99,6 @@
 
 	<script>
 		
-		// Animes = document.querySelectorAll(".Anime");
-
-		// for (Anime of Animes){
-
-		// 	Images = Anime.querySelectorAll("img");
-		// 	var slideIndex = 0;
-		// 	slideshow(Images);
-		// }
-
-		
 		var slideIndex = Array();
 		Animes = document.querySelectorAll(".Anime")
 
@@ -138,7 +128,7 @@
 				if(slideIndex[i] > Animes[i].querySelectorAll("img").length -1 ){slideIndex[i] = 0;}
 			}
 
-	  		setTimeout(slideshow, 2000); // Change image every 2 seconds
+	  		setTimeout(slideshow, 5000); // Change image every 5 seconds
 	  	}
 
 

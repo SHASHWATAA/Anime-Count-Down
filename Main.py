@@ -2,21 +2,24 @@
 
 import requests
 from lxml import html
+from multiprocessing import Process, Queue
 phptransfer=''
+CountdownQueue = Queue()
+ImagesQueue = Queue()
 
-def get_image(url):
+def get_image(url,queue):
 	r  = requests.get(url)
 	image = html.fromstring(r.content).xpath('//*[@id="content"]/table/tr/td[2]/div[1]/table/tr/td[1]/div[1]/a/img/@data-src')
 	
-	return image
+	queue.put(image)
 
-def get_release_countdown(url):
+def get_release_countdown(url,queue):
 	r  = requests.get(url)
 	episode = html.fromstring(r.content).xpath('//tr[contains(@class, "day-future")][1]/td[2]/span[contains(text(),*)]/text()')
 	date = html.fromstring(r.content).xpath('//tr[contains(@class, "day-future")][1]/td/span[contains(@class, "datetime")]/text()')
 	countdowndata = (episode,date)
 	
-	return countdowndata 
+	queue.put(countdowndata)
 
 
 urls  = [('Boruto: Naruto Next Generations', 'https://www.monthly.moe/anime/1048-boruto-naruto-next-generations', 'https://myanimelist.net/anime/34566/Boruto__Naruto_Next_Generations/pics'),
@@ -27,10 +30,18 @@ urls  = [('Boruto: Naruto Next Generations', 'https://www.monthly.moe/anime/1048
 for item in urls:
 	# print ("<p id ='t'><span>", item[0], "</span> <span>episode:" , get_release_countdown(item[1])[1][0], "</span><span>release date:", get_release_countdown(item[1])[0][0] ,"</span></p>")
 	name = item[0]
-	episodenum 	= get_release_countdown(item[1])[0][0]
-	releaseDate = get_release_countdown(item[1])[1][0].strip()
+
+	jobs = (get_release_countdown,get_image)
+	args = ((item[1],CountdownQueue),(item[2],ImagesQueue))
+	
+	for job, arg in zip(jobs, args):
+		Process(target=job, args=arg).start()
+
+	scrapeddata = CountdownQueue.get()
+	episodenum 	= scrapeddata[0][0]
+	releaseDate = scrapeddata[1][0].strip()
 	releaseDate = releaseDate[0:releaseDate.find(" JST")]
-	imageUrl 	= get_image(item[2])
+	imageUrl 	= ImagesQueue.get()
 	combined = name + ";" + episodenum + ";" + releaseDate + ";" + str(imageUrl)
 	phptransfer = phptransfer + "|" + combined
 
