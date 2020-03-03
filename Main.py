@@ -21,8 +21,7 @@ def get_release_countdown(url):
 
 urls  = [('Boruto: Naruto Next Generations', 'https://www.monthly.moe/anime/1048-boruto-naruto-next-generations', 'https://myanimelist.net/anime/34566/Boruto__Naruto_Next_Generations/pics'),
 		 ('Boku no Hero Academia', 'https://www.monthly.moe/anime/2082-boku-no-hero-academia-2019', 'https://myanimelist.net/anime/38408/Boku_no_Hero_Academia_4th_Season/pics'),
-		 ('Nanatsu no Taizai: Kamigaki no Gekirin','https://www.monthly.moe/anime/2117-nanatsu-no-taizai-kamigami-no-gekirin','https://myanimelist.net/anime/39701/Nanatsu_no_Taizai__Kamigami_no_Gekirin/pics'),
-		 ('One Piece','https://www.monthly.moe/anime/181-one-piece','https://myanimelist.net/anime/21/One_Piece/pics')]
+		 ('Nanatsu no Taizai: Kamigaki no Gekirin','https://www.monthly.moe/anime/2117-nanatsu-no-taizai-kamigami-no-gekirin','https://myanimelist.net/anime/39701/Nanatsu_no_Taizai__Kamigami_no_Gekirin/pics')]
 
 
 for item in urls:
