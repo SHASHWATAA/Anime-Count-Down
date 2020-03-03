@@ -22,6 +22,7 @@ for item in urls:
 	name = item[0]
 	episodenum = get_release_countdown(item[1])[1][0]
 	releaseDate = get_release_countdown(item[1])[0][0].strip()
+	releaseDate = releaseDate[0:releaseDate.find(" JST")]
 	combined = name + ";" + episodenum + ";" + releaseDate
 	phptransfer = phptransfer + "|" + combined
 

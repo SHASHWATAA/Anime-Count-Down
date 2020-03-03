@@ -1,7 +1,7 @@
 <?php
 
 // $op = shell_exec ( '/Applications/MAMP/htdocs/Anime-Count-Down/Main.py' );
-$pythonOutput = "Boruto: Naruto Next Generations;21;4 March 2020 17:55 JST (+09:00)|Boku no Hero Academia;147;8 March 2020 17:30 JST (+09:00)|Nanatsu no Taizai: Kamigaki no Gekirin;147;8 March 2020 17:30 JST (+09:00)";
+$pythonOutput = "Boruto: Naruto Next Generations;21;4 March 2020 17:55|Boku no Hero Academia;147;8 March 2020 17:30|Nanatsu no Taizai: Kamigaki no Gekirin;147;8 March 2020 17:30";
 
 $arrAllAnime = explode("|", $pythonOutput);
 
@@ -25,6 +25,14 @@ foreach ($arrAllAnime as $EachAnime) {
 <p id="demo"></p>
 
 <script>
+
+d = new Date();
+localTime = d.getTime();
+localOffset = d.getTimezoneOffset() * 60000;
+utc = localTime + localOffset;
+
+
+
 // Set the date we're counting down to
 var ddate= document.querySelector('body > span:nth-child(4) > span').innerText;
 var countDownDate = new Date("ddate").getTime();
