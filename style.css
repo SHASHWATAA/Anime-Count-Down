@@ -1,44 +1,48 @@
 body {
-  background-color: #121212;
-  color: white;
-}
-
-#AnimeList{
-	display: grid;
-	grid-template-columns: 33.33% 33.33% 33.33%;
-}
-
-#AnimeList > div{
-	display: grid;
-	text-align: center;
-	grid-template-rows: 5.3em 55vh;
-}
-
-#AnimeList div > h1 {
-	margin: auto;
-}
-
-
-#AnimeList > div > span:nth-child(2){
-	font-size: 1.5em;
-}
-
-#AnimeList div > span {
-	font-size: 2em;
-
-}
-
-#AnimeList img {
-	margin: auto;
-	height: 50vh;
-}
-
-.Anime > * {
-	margin-top: 10px;
-	margin-bottom: 10px;
+	background-color: #121212;
+	color: white;
 }
 
 .Episode {
 	font-weight: bold;
 	/*font-size: 1.5em !important;*/
+}
+
+@media only screen and (min-width: 765px) {
+
+	#AnimeList{
+		display: grid;
+		grid-template-columns: 33.33% 33.33% 33.33%;
+	}
+
+	#AnimeList > div{
+		display: grid;
+		text-align: center;
+		grid-template-rows: 5.3em 55vh;
+	}
+
+	#AnimeList div > h1 {
+		margin: auto;
+	}
+
+
+	#AnimeList > div > span:nth-child(2){
+		font-size: 1.5em;
+	}
+
+	#AnimeList div > span {
+		font-size: 2em;
+
+	}
+
+	#AnimeList img {
+		margin: auto;
+		height: 50vh;
+	}
+
+	.Anime > * {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
 }
