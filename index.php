@@ -7,10 +7,16 @@
 
 	<?php
 
-	$pythonOutput = shell_exec ( '/Applications/MAMP/htdocs/Anime-Count-Down/Main.py' );
+
+	exec( '/Library/Frameworks/Python.framework/Versions/3.7/bin/pyton3 ./Main.py', $pythonOutput, $return);
+
+	if ($return != 0){
+		exec( '/opt/alt/python37/bin/pyton3 ./Main.py', $pythonOutput, $return);		
+	}
+
 	// $pythonOutput = "Boruto: Naruto Next Generations;147;8 March 2020 17:30;['https://cdn.myanimelist.net/images/anime/4/83369.jpg', 'https://cdn.myanimelist.net/images/anime/12/86784.jpg', 'https://cdn.myanimelist.net/images/anime/1393/96860.jpg', 'https://cdn.myanimelist.net/images/anime/1777/104957.jpg']|Boku no Hero Academia;84;7 March 2020 17:30;['https://cdn.myanimelist.net/images/anime/1978/95162.jpg', 'https://cdn.myanimelist.net/images/anime/1251/97634.jpg', 'https://cdn.myanimelist.net/images/anime/1831/102539.jpg', 'https://cdn.myanimelist.net/images/anime/1315/102961.jpg', 'https://cdn.myanimelist.net/images/anime/1137/105203.jpg', 'https://cdn.myanimelist.net/images/anime/1023/105559.jpg', 'https://cdn.myanimelist.net/images/anime/1233/106246.jpg', 'https://cdn.myanimelist.net/images/anime/1744/106248.jpg']|Nanatsu no Taizai: Kamigaki no Gekirin;21;4 March 2020 17:55;['https://cdn.myanimelist.net/images/anime/1574/100519.jpg', 'https://cdn.myanimelist.net/images/anime/1546/103418.jpg']";
 
-	$arrAllAnime = explode("|", $pythonOutput);
+	$arrAllAnime = explode("|", $pythonOutput[0]);
 
 		// print_r($arrAllAnime);
 
@@ -41,6 +47,7 @@
 	}
 
 	echo "</div>"
+	
 	?>
 	
 	<!-- timer script -->
@@ -62,12 +69,12 @@
 			var ReleaseDatelocal = ReleaseDatelocalepochDateObj.toDateString() + ' ' + ReleaseDatelocalepochDateObj.toLocaleTimeString('en-US');
 			Anime.querySelector("span[name='ReleaseDate']").innerText = ReleaseDatelocal;
 
-		// Update the count down every 1 second
-		var x = setInterval(Counter, 1000, Anime, ReleaseDateUTCepoch);	
+			// Update the count down every 1 second
+			var x = setInterval(Counter, 1000, Anime, ReleaseDateUTCepoch);	
 
-	}
+		}
 
-	function Counter(Anime, ReleaseDateUTCepoch) {
+		function Counter(Anime, ReleaseDateUTCepoch) {
 
 			// Get today's date and time
 			var d = new Date();
@@ -128,15 +135,12 @@
 				if(slideIndex[i] > Animes[i].querySelectorAll("img").length -1 ){slideIndex[i] = 0;}
 			}
 
-	  		setTimeout(slideshow, 5000); // Change image every 5 seconds
-	  	}
+			setTimeout(slideshow, 5000); // Change image every 5 seconds
+		}
 
+	</script>
 
-
-
-	  </script>
-
-	</body>
+</body>
 
 
 
