@@ -8,13 +8,21 @@ ImagesQueue = Queue()
 def get_image(url,queue):
 	r  = requests.get(url)
 	image = html.fromstring(r.content).xpath('//*[@id="content"]/table/tr/td[2]/div[1]/table/tr/td[1]/div[1]/a/img/@data-src')
-	
 	queue.put(image)
 
 def get_release_countdown(url,queue):
 	r  = requests.get(url)
+
 	episode = html.fromstring(r.content).xpath('//tr[contains(@class, "day-future")][1]/td[2]/span[contains(text(),*)]/text()')
 	date = html.fromstring(r.content).xpath('//tr[contains(@class, "day-future")][1]/td/span[contains(@class, "datetime")]/text()')
+	
+	status = html.fromstring(r.content).xpath('//tr[contains(td/text(),"Status")]/td[2]/text()')
+	
+	if (status[0] == 'Finished'):
+		episode ='xx'
+		date = 'Finished'
+
+
 	countdowndata = (episode,date)
 	
 	queue.put(countdowndata)
@@ -27,7 +35,6 @@ urls  = [('Boruto: Naruto Next Generations', 'https://www.monthly.moe/anime/1048
 
 
 for item in urls:
-	# print ("<p id ='t'><span>", item[0], "</span> <span>episode:" , get_release_countdown(item[1])[1][0], "</span><span>release date:", get_release_countdown(item[1])[0][0] ,"</span></p>")
 	name = item[0]
 
 	jobs = (get_release_countdown,get_image)
@@ -37,9 +44,15 @@ for item in urls:
 		Process(target=job, args=arg).start()
 
 	scrapeddata = CountdownQueue.get()
-	episodenum 	= scrapeddata[0][0]
-	releaseDate = scrapeddata[1][0].strip()
-	releaseDate = releaseDate[0:releaseDate.find(" JST")]
+		
+	if scrapeddata[1]== 'Finished':
+		episodenum 	= scrapeddata[0]
+		releaseDate = scrapeddata[1]
+	else:
+		episodenum 	= scrapeddata[0][0]
+		releaseDate = scrapeddata[1][0].strip()
+		releaseDate = releaseDate[0:releaseDate.find(" JST")]
+
 	imageUrl 	= ImagesQueue.get()
 	combined = name + ";" + episodenum + ";" + releaseDate + ";" + str(imageUrl)
 	phptransfer = phptransfer + "|" + combined
