@@ -11,43 +11,94 @@
 
 // this is a check to see if it is run on my local server or on the webserver.
 // return will output the error code [i guess?]. 0 is no error.
-	exec( '/Library/Frameworks/Python.framework/Versions/3.7/bin/python3 ./Main.py', $pythonOutput, $return);
 
-	if ($return != 0){
-		exec( '/opt/alt/python37/bin/python3 ./Main.py', $pythonOutput, $return);		
-	}
+	// exec( '/Library/Frameworks/Python.framework/Versions/3.7/bin/python3 ./Main.py', $pythonOutput, $return);
+
+	// if ($return != 0){
+	// 	exec( '/opt/alt/python37/bin/python3 ./Main.py', $pythonOutput, $return);		
+	// }
 
 // error checker.
-	// $pythonOutput = array("Boruto: Naruto Next Generations;150;29 March 2020 17:30;['https://cdn.myanimelist.net/images/anime/4/83369.jpg', 'https://cdn.myanimelist.net/images/anime/12/86784.jpg', 'https://cdn.myanimelist.net/images/anime/1393/96860.jpg', 'https://cdn.myanimelist.net/images/anime/1777/104957.jpg']|Boku no Hero Academia;87;28 March 2020 17:30;['https://cdn.myanimelist.net/images/anime/1978/95162.jpg', 'https://cdn.myanimelist.net/images/anime/1251/97634.jpg', 'https://cdn.myanimelist.net/images/anime/1831/102539.jpg', 'https://cdn.myanimelist.net/images/anime/1315/102961.jpg', 'https://cdn.myanimelist.net/images/anime/1137/105203.jpg', 'https://cdn.myanimelist.net/images/anime/1023/105559.jpg', 'https://cdn.myanimelist.net/images/anime/1233/106246.jpg', 'https://cdn.myanimelist.net/images/anime/1744/106248.jpg']|Nanatsu no Taizai: Kamigaki no Gekirin;x;;['https://cdn.myanimelist.net/images/anime/1574/100519.jpg', 'https://cdn.myanimelist.net/images/anime/1546/103418.jpg']|Black Clover;128;31 March 2020 18:25;['https://cdn.myanimelist.net/images/anime/5/88165.jpg', 'https://cdn.myanimelist.net/images/anime/2/88336.jpg', 'https://cdn.myanimelist.net/images/anime/1426/94678.jpg', 'https://cdn.myanimelist.net/images/anime/1461/101072.jpg', 'https://cdn.myanimelist.net/images/anime/1190/105182.jpg']");
+	$pythonOutput = array("Boruto: Naruto Next Generations;152;05 April 2020 17:30;['https://cdn.myanimelist.net/images/anime/4/83369.jpg', 'https://cdn.myanimelist.net/images/anime/12/86784.jpg', 'https://cdn.myanimelist.net/images/anime/1393/96860.jpg', 'https://cdn.myanimelist.net/images/anime/1777/104957.jpg']|Boku no Hero Academia;26;9 April 2020 17:30;['https://cdn.myanimelist.net/images/anime/1978/95162.jpg', 'https://cdn.myanimelist.net/images/anime/1251/97634.jpg', 'https://cdn.myanimelist.net/images/anime/1831/102539.jpg', 'https://cdn.myanimelist.net/images/anime/1315/102961.jpg', 'https://cdn.myanimelist.net/images/anime/1137/105203.jpg', 'https://cdn.myanimelist.net/images/anime/1023/105559.jpg', 'https://cdn.myanimelist.net/images/anime/1233/106246.jpg', 'https://cdn.myanimelist.net/images/anime/1744/106248.jpg']|Nanatsu no Taizai: Kamigaki no Gekirin;11;8 April 2020 17:30;['https://cdn.myanimelist.net/images/anime/1574/100519.jpg', 'https://cdn.myanimelist.net/images/anime/1546/103418.jpg']|Black Clover;129;7 April 2020 18:25;['https://cdn.myanimelist.net/images/anime/5/88165.jpg', 'https://cdn.myanimelist.net/images/anime/2/88336.jpg', 'https://cdn.myanimelist.net/images/anime/1426/94678.jpg', 'https://cdn.myanimelist.net/images/anime/1461/101072.jpg', 'https://cdn.myanimelist.net/images/anime/1190/105182.jpg']");
 
 	$arrAllAnime = explode("|", $pythonOutput[0]);
 
 		// print_r($arrAllAnime);
+	$animearray = [];
 
 	echo "<div id = AnimeList>";
 
 	foreach ($arrAllAnime as $EachAnime) {
+		$temp=[];
 		$arrEachAnime = explode(";", $EachAnime);
-		echo ("<div class='Anime'>");
+		$temp['rd'] = $arrEachAnime[2];
+		$temp[] = ("<div class='Anime'>");
 
+		// searches ] [  and ' and replaces them with nothing.
 		$searchval = array("]","[","'");
 		$replaceval = array("","","");
+
 		$imagelinks = str_replace($searchval,$replaceval,$arrEachAnime[3]);
 		$imagelinksarr = explode(',', $imagelinks);
-		echo("<h1>");
-		echo $arrEachAnime[0];
-		echo( "</h1>");
+		$temp[] = ("<h1>");
+		$temp[] =  $arrEachAnime[0];
+		$temp[] = ( "</h1>");
 
 		foreach ($imagelinksarr as $imagelinks) {
-			echo('<img class="mySlides" src="' . $imagelinks . '">');
+			$temp[] = ('<img class="mySlides" src="' . $imagelinks . '">');
 		}
 
-		echo("<span class = 'Episode'>Ep: <span name='EpisodeNumber'>");
-		echo $arrEachAnime[1];
-		echo("</span></span><span name ='date'> Release Date: <span name='ReleaseDate'>");
-		echo $arrEachAnime[2];
-		echo("</span></span><span name ='countdown'> Time left: <span name='Timer'>");
-		echo("</span></span></div>");
+		$temp[] = ("<span class = 'Episode'>Ep: <span name='EpisodeNumber'>");
+		$temp[] =  $arrEachAnime[1];
+		$temp[] = ("</span></span><span name ='date'> Release Date: <span name='ReleaseDate'>");
+		$temp[] =  $arrEachAnime[2];
+		$temp[] = ("</span></span><span name ='countdown'> Time left: <span name='Timer'>");
+		$temp[] = ("</span></span></div>");
+		
+		// first check if array is empty
+		if (count($animearray) == 0) {
+			$animearray[] = $temp;
+		}else{ 
+			// if anime is finished, doesnt matter add it to the last.
+			if ($arrEachAnime[2] == 'Finished') {
+				$animearray[] = $temp;
+			}else{
+				// check if first anime added was finished. If yes, simply add the current anime to the first position.
+				if ($animearray[0]['rd'] == 'Finished') {
+					array_unshift($animearray,$temp);	
+				}else{
+					// loop from first of animearray and add it before the first nth item whose release date is after current anime's date.
+					for ($i=0; $i < count($animearray); $i++) { 
+						if ($animearray[$i]['rd'] == 'Finished') {
+							break;
+						}
+						
+						$date1 = new DateTime($arrEachAnime[2]);
+						$date2 = new DateTime($animearray[$i]['rd']);
+						if ($date1>$date2) {
+							continue;
+						}else{ 
+							break;
+						}
+					}
+					array_splice($animearray, $i, 0, array($temp));
+				}
+				
+			}
+			
+		}
+
+
+	}
+
+
+	foreach ($animearray as $anime) {
+		foreach ($anime as $k => $v) {
+			if ($k !== 'rd') {
+				echo $v;
+			}
+			
+		}
 	}
 
 	echo "</div>"
