@@ -12,14 +12,14 @@
 // this is a check to see if it is run on my local server or on the webserver.
 // return will output the error code [i guess?]. 0 is no error.
 
-	// exec( '/Library/Frameworks/Python.framework/Versions/3.7/bin/python3 ./Main.py', $pythonOutput, $return);
+	exec( '/Library/Frameworks/Python.framework/Versions/3.7/bin/python3 ./Main.py', $pythonOutput, $return);
 
-	// if ($return != 0){
-	// 	exec( '/opt/alt/python37/bin/python3 ./Main.py', $pythonOutput, $return);		
-	// }
+	if ($return != 0){
+		exec( '/opt/alt/python37/bin/python3 ./Main.py', $pythonOutput, $return);		
+	}
 
 // error checker.
-	$pythonOutput = array("Boruto: Naruto Next Generations;152;05 April 2020 17:30;['https://cdn.myanimelist.net/images/anime/4/83369.jpg', 'https://cdn.myanimelist.net/images/anime/12/86784.jpg', 'https://cdn.myanimelist.net/images/anime/1393/96860.jpg', 'https://cdn.myanimelist.net/images/anime/1777/104957.jpg']|Boku no Hero Academia;26;9 April 2020 17:30;['https://cdn.myanimelist.net/images/anime/1978/95162.jpg', 'https://cdn.myanimelist.net/images/anime/1251/97634.jpg', 'https://cdn.myanimelist.net/images/anime/1831/102539.jpg', 'https://cdn.myanimelist.net/images/anime/1315/102961.jpg', 'https://cdn.myanimelist.net/images/anime/1137/105203.jpg', 'https://cdn.myanimelist.net/images/anime/1023/105559.jpg', 'https://cdn.myanimelist.net/images/anime/1233/106246.jpg', 'https://cdn.myanimelist.net/images/anime/1744/106248.jpg']|Nanatsu no Taizai: Kamigaki no Gekirin;11;8 April 2020 17:30;['https://cdn.myanimelist.net/images/anime/1574/100519.jpg', 'https://cdn.myanimelist.net/images/anime/1546/103418.jpg']|Black Clover;129;7 April 2020 18:25;['https://cdn.myanimelist.net/images/anime/5/88165.jpg', 'https://cdn.myanimelist.net/images/anime/2/88336.jpg', 'https://cdn.myanimelist.net/images/anime/1426/94678.jpg', 'https://cdn.myanimelist.net/images/anime/1461/101072.jpg', 'https://cdn.myanimelist.net/images/anime/1190/105182.jpg']");
+	// $pythonOutput = array("Boruto: Naruto Next Generations;152;05 April 2020 17:30;['https://cdn.myanimelist.net/images/anime/4/83369.jpg', 'https://cdn.myanimelist.net/images/anime/12/86784.jpg', 'https://cdn.myanimelist.net/images/anime/1393/96860.jpg', 'https://cdn.myanimelist.net/images/anime/1777/104957.jpg']|Boku no Hero Academia;26;9 April 2020 17:30;['https://cdn.myanimelist.net/images/anime/1978/95162.jpg', 'https://cdn.myanimelist.net/images/anime/1251/97634.jpg', 'https://cdn.myanimelist.net/images/anime/1831/102539.jpg', 'https://cdn.myanimelist.net/images/anime/1315/102961.jpg', 'https://cdn.myanimelist.net/images/anime/1137/105203.jpg', 'https://cdn.myanimelist.net/images/anime/1023/105559.jpg', 'https://cdn.myanimelist.net/images/anime/1233/106246.jpg', 'https://cdn.myanimelist.net/images/anime/1744/106248.jpg']|Nanatsu no Taizai: Kamigaki no Gekirin;11;8 April 2020 17:30;['https://cdn.myanimelist.net/images/anime/1574/100519.jpg', 'https://cdn.myanimelist.net/images/anime/1546/103418.jpg']|Black Clover;129;7 April 2020 18:25;['https://cdn.myanimelist.net/images/anime/5/88165.jpg', 'https://cdn.myanimelist.net/images/anime/2/88336.jpg', 'https://cdn.myanimelist.net/images/anime/1426/94678.jpg', 'https://cdn.myanimelist.net/images/anime/1461/101072.jpg', 'https://cdn.myanimelist.net/images/anime/1190/105182.jpg']");
 
 	$arrAllAnime = explode("|", $pythonOutput[0]);
 
